@@ -1,0 +1,15 @@
+services:
+  backend:
+    build: .
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      - CORS_ORIGINS=${CORS_ORIGINS:-http://localhost:8080}
+      - SECRET_KEY=${SECRET_KEY:-cambiar-en-produccion-clave-secreta-muy-larga}
+      - ACCESS_TOKEN_EXPIRE_MINUTES=${ACCESS_TOKEN_EXPIRE_MINUTES:-60}
+    # Montar bd/ en desarrollo para editar JSON sin reconstruir
+    volumes:
+      - ./bd:/app/bd:ro
+    restart: unless-stopped
